@@ -65,7 +65,7 @@ function videoStop(id) {
   console.log("Pausamos la url" + urlSecreta);
 }
 
-export class PlatziClass {
+class PlatziClass {
   constructor({ name, videoID }) {
     this.name = name;
     this.videoID = videoID;
@@ -83,9 +83,11 @@ export class PlatziClass {
 }
 
 class Course {
-  constructor({ name, classes = [] }) {
+  constructor({ name, classes = [], isFree = false, lang = "spanish" }) {
     this._name = name;
     this.classes = classes;
+    this.isFree = false;
+    this.lang = "spanish";
   }
 
   get name() {
@@ -130,6 +132,12 @@ class LearningPath {
   }
 }
 
+const cursoDefinitivoHTML = new Course({
+  name: "Curso definitivo de html y css",
+  lang: "english",
+  isFree: true,
+});
+////////////////herencia/////
 class Student {
   constructor({
     name,
@@ -154,7 +162,49 @@ class Student {
   }
 }
 
-const juan2 = new Student({
+class FreeStudent extends Student {
+  constructor(props) {
+    //permite llamar al contructor de la clase madre
+    super(props);
+  }
+  approveCourse(newCourse) {
+    if (newCourse.isFree) {
+      this.approveCourse.push(newCourse);
+    } else {
+      console.warn(
+        "Lo sentimos, " + this.name + ", solo puedes tomar cursos gratis"
+      );
+    }
+  }
+}
+
+class BasicStudent extends Student {
+  constructor(props) {
+    //permite llamar al contructor de la clase madre
+    super(props);
+  }
+  approveCourse(newCourse) {
+    if (newCourse.lang !== "english") {
+      this.approveCourse.push(newCourse);
+    } else {
+      console.warn(
+        "Lo sentimos, " + this.name + ", solo puedes tomar cursos en español"
+      );
+    }
+  }
+}
+
+class ExpertStudent extends Student {
+  constructor(props) {
+    //permite llamar al contructor de la clase madre
+    super(props);
+  }
+  approveCourse(newCourse) {
+    this.approveCourse.push(newCourse);
+  }
+}
+
+const juan2 = new FreeStudent({
   name: "JuanDC",
   username: "juandc",
   email: "juanito@juanito.com",
@@ -162,10 +212,13 @@ const juan2 = new Student({
   learningPaths: [escuelaWeb, escuelaVgs],
 });
 
-const miguelito2 = new Student({
+const miguelito2 = new ExpertStudent({
   name: "Miguelito",
   username: "migelitofeliz",
   email: "miguelito@juanito.com",
   instagram: "migelito_feliz",
   learningPaths: [escuelaWeb, escuelaData],
 });
+
+//
+//miguelito.approveCourse(cursoDefinitivoHTML);
