@@ -55,6 +55,21 @@ const miguelito = new Student2({
 miguelito.aprobarCurso("Curso avanzado de React");
 
 ////////////////////////////////////////////////////////////////////////////
+
+class Comment {
+  constructor({ content, studentName, studentRol = "estudiante" }) {
+    this.content = content;
+    this.studentName = studentName;
+    this.studentRol = studentRol;
+    this.likes = 0;
+  }
+  publicar() {
+    console.log(this.studentName + "(" + this.studentRol + ")");
+    console.log(this.likes + "likes");
+    console.log(this.content);
+  }
+}
+
 function videoPlay(id) {
   const urlSecreta = "http://platzivideosecreto.com";
   console.log("se esta reproduciendo");
@@ -160,6 +175,13 @@ class Student {
     this.approvedCourses = approvedCourses;
     this.learningPaths = learningPaths;
   }
+  publicarComentario(commentContent) {
+    const commnet = new Comment({
+      content: commentContent,
+      studentName: this.name,
+    });
+    commnet.publicar();
+  }
 }
 
 class FreeStudent extends Student {
@@ -204,6 +226,25 @@ class ExpertStudent extends Student {
   }
 }
 
+class TeacherStudent extends Student {
+  constructor(props) {
+    //permite llamar al contructor de la clase madre
+    super(props);
+  }
+  approveCourse(newCourse) {
+    this.approveCourse.push(newCourse);
+  }
+  //polimorfismo inclusion
+  publicarComentario(commentContent) {
+    const commnet = new Comment({
+      content: commentContent,
+      studentName: this.name,
+      studentRol: "profesor",
+    });
+    commnet.publicar();
+  }
+}
+
 const juan2 = new FreeStudent({
   name: "JuanDC",
   username: "juandc",
@@ -220,5 +261,14 @@ const miguelito2 = new ExpertStudent({
   learningPaths: [escuelaWeb, escuelaData],
 });
 
+const freddy = new TeacherStudent({
+  name: "freddy",
+  username: "freddy",
+  email: "freddy@freddyo.com",
+  instagram: "freddy",
+});
+
 //
-//miguelito.approveCourse(cursoDefinitivoHTML);
+miguelito.approveCourse(cursoDefinitivoHTML);
+juan2.publicarComentario("Me encanto el curso");
+freddy.publicarComentario("Excelente :)");
