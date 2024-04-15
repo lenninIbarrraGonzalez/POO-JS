@@ -53,3 +53,119 @@ const miguelito = new Student2({
 });
 
 miguelito.aprobarCurso("Curso avanzado de React");
+
+////////////////////////////////////////////////////////////////////////////
+function videoPlay(id) {
+  const urlSecreta = "http://platzivideosecreto.com";
+  console.log("se esta reproduciendo");
+}
+
+function videoStop(id) {
+  const urlSecreta = "http://platzivideosecreto.com";
+  console.log("Pausamos la url" + urlSecreta);
+}
+
+export class PlatziClass {
+  constructor({ name, videoID }) {
+    this.name = name;
+    this.videoID = videoID;
+  }
+
+  //metodos
+
+  reproducir() {
+    videoPlay(this.videoID);
+  }
+
+  pausar() {
+    videoStop(this.videoID);
+  }
+}
+
+class Course {
+  constructor({ name, classes = [] }) {
+    this._name = name;
+    this.classes = classes;
+  }
+
+  get name() {
+    return this._name;
+  }
+
+  set name(nuevoNombre) {
+    //validaciones
+    if (nuevoNombre === "Curso Malito de Programación Básica") {
+      console.error("Web... No");
+    } else {
+      this._name = nuevoNombre;
+    }
+  }
+}
+
+//llama al geeter
+cursoProgBasica.name;
+
+//para actualizarlo
+cursoProgBasica.name = "Curso gratis de programación";
+
+const escuelaWeb = new LearningPath({
+  name: "Escuela de Desarrollo Web",
+  courses: [cursoProgBasica, cursoDefinitivoHTML, cursoPracticoHTML],
+});
+
+const escuelaData = new LearningPath({
+  name: "Escuela de Data Science",
+  courses: [cursoProgBasica, "Curso DataBusiness", "Curso Dataviz"],
+});
+
+const escuelaVgs = new LearningPath({
+  name: "Escuela de Vidweojuegos",
+  courses: [cursoProgBasica, "Curso de Unity", "Curso de Unreal"],
+});
+
+class LearningPath {
+  constructor({ name, courses = [] }) {
+    this.name = name;
+    this.courses = courses;
+  }
+}
+
+class Student {
+  constructor({
+    name,
+    email,
+    username,
+    twitter = undefined,
+    instagram = undefined,
+    facebook = undefined,
+    approvedCourses = [],
+    learningPaths = [],
+  }) {
+    this.name = name;
+    this.email = email;
+    this.username = username;
+    this.socialMedia = {
+      twitter,
+      instagram,
+      facebook,
+    };
+    this.approvedCourses = approvedCourses;
+    this.learningPaths = learningPaths;
+  }
+}
+
+const juan2 = new Student({
+  name: "JuanDC",
+  username: "juandc",
+  email: "juanito@juanito.com",
+  twitter: "fjuandc",
+  learningPaths: [escuelaWeb, escuelaVgs],
+});
+
+const miguelito2 = new Student({
+  name: "Miguelito",
+  username: "migelitofeliz",
+  email: "miguelito@juanito.com",
+  instagram: "migelito_feliz",
+  learningPaths: [escuelaWeb, escuelaData],
+});
